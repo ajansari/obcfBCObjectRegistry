@@ -1,40 +1,8 @@
 {
   "asOf": "September 28, 2026",
   "githubOwner": "ajansari",
-  "apps": [
-    {"name": "AL for Functional Consultants HOL", "appId": "392ac19f-2ffe-45f8-9eee-e9a4a0efc4f9", "ranges": [[50010, 50012]], "type": "PTE", "repo": "ALForFunctionalConsultantsHOL", "visibility": "Public"},
-    {"name": "POPrintRestriction", "appId": "a121a71e-63fa-4b5d-923a-3e0215697800", "ranges": [[50090, 50091]], "type": "PTE", "repo": "AL-POPrintRestriction", "visibility": "Public"},
-    {"name": "ALAddNewField", "appId": "7da7777d-0bb4-4630-8889-5f89a5bf8df5", "ranges": [[50100, 50149]], "type": "PTE", "repo": "AL-AddFieldToItemTable", "visibility": "Private"},
-    {"name": "Custom Sales Invoice Report", "appId": "87d8b66c-35e7-4a13-a37d-1957342c1ba5", "ranges": [[50100, 50149]], "type": "PTE", "repo": "ReportDemoProject1", "visibility": "Private"},
-    {"name": "BBB Rating Insights", "appId": "9aabe937-d408-4190-b533-1440665a9ed6", "ranges": [[50601, 50620], [50621, 50650]], "type": "PTE", "repo": "claudeCodeMobileDevTest", "visibility": "Public"},
-    {"name": "NAICS Classification", "appId": "4a23d365-3cd3-4dd0-8d0b-005c3143e0cf", "ranges": [[60470, 60499]], "type": "PTE", "repo": "NAICSClassificationApp", "visibility": "Public"},
-    {"name": "Bootcamp Registration Tracking", "appId": "f53b57ed-efc7-47dc-b3df-0bf7a34f7708", "ranges": [[60800, 60899]], "type": "PTE", "repo": "BootcampRegistrationApp", "visibility": "Public"},
-    {"name": "Summit 2023 AL Project", "appId": "04de3c47-4c0b-4b03-843d-d7332e0f4573", "ranges": [[70100, 70102], [70200, 70202]], "type": "PTE", "repo": "Summit2023Proj", "visibility": "Private"},
-    {"name": "SIC Code Classification", "appId": "da5e7455-f969-4f2c-8e50-a05aff3284c0", "ranges": [[77071, 77099]], "type": "PTE", "repo": "SICCodeClassificationApp", "visibility": "Public"},
-    {"name": "General Journal Copilot", "appId": "d14f792f-90ff-4084-8ba7-edfe4327df4b", "ranges": [[78700, 78799]], "type": "PTE", "repo": "GLEntryCopilot", "visibility": "Private"},
-    {"name": "DBA Tracker", "appId": "00e74a82-47db-4186-ae79-85b3aa726260", "ranges": [[79990, 79999]], "type": "PTE", "repo": "DBA", "visibility": "Public"},
-    {"name": "BCandSki RC App", "appId": "794794a0-40e2-4f32-9aef-2ef4f3ecde0b", "ranges": [[80000, 80149]], "type": "PTE", "repo": "RoleTailoring", "visibility": "Public"},
-    {"name": "DSWi API Page Example", "appId": "6059ae9f-ef71-4af5-9e3c-1c656cf8e3a6", "ranges": [[80100, 80110]], "type": "PTE", "repo": "AL-APIsAndPermissions", "visibility": "Public"},
-    {"name": "IP Tracking", "appId": "8bf69fdd-4440-48d7-b7b4-7608ac2e9266", "ranges": [[80300, 80339]], "type": "PTE", "repo": "intellectualPropertyTracker", "visibility": "Public"},
-    {"name": "Member & Chapter Manager", "appId": "a037882e-070b-47e4-ab4e-f6497d9eb05b", "ranges": [[80700, 80799]], "type": "PTE", "repo": "MemberAndChapterManager", "visibility": "Public"},
-    {"name": "SummitNADay1", "appId": "a40b796a-cf2d-4810-9c79-2b94d4ca88e6", "ranges": [[80890, 80899]], "type": "PTE", "repo": "al-instructorworkshopsample", "visibility": "Public"},
-    {"name": "AJ's Copilot", "appId": "30c37d64-2af0-4ff2-b933-608b4bde8ef5", "ranges": [[80895, 80899]], "type": "PTE", "repo": "addyourcopilottobc", "visibility": "Public"},
-    {"name": "Metropak Coupa Agent Extension", "appId": "4e5def94-9194-4f4d-945c-e7c84b5ef4d7", "ranges": [[80980, 80999]], "type": "PTE", "repo": "mpkAmazonBcPte", "visibility": "Private"},
-    {"name": "OnlyBCFans Support Manager", "appId": "12345678-1234-1234-1234-123456789012", "ranges": [[88800, 88899]], "type": "PTE", "repo": "OLD-DNU-alsupportcasemanager", "visibility": "Private"},
-    {"name": "Support Manager", "appId": "12345678-1234-1234-1234-123456789012", "ranges": [[88800, 88899]], "type": "PTE", "repo": "OnlyBCFansSupportManager", "visibility": "Private"},
-    {"name": "Business Central API Collection", "appId": "06a0b195-0da7-49be-9f55-63fedf76fa1a", "ranges": [[90500, 90599]], "type": "PTE", "repo": "OLD-DNU-al-OnlyBCFans-apiMiniLibrary", "visibility": "Private"},
-    {"name": "OBCF APIs v3", "appId": "855299b2-5650-41ce-80c1-b130b89af4b4", "ranges": [[90800, 91099]], "type": "PTE", "repo": "obcfBCAPIsV3", "visibility": "Public"},
-    {"name": "TestProject001 - Pending", "appId": "—", "ranges": [[60000, 60019]], "type": "PTE", "repo": "—", "visibility": "—", "issued": "2026-09-29"},
-    {"name": "Sam s Demo Project - Pending", "appId": "—", "ranges": [[60020, 60042]], "type": "PTE", "repo": "—", "visibility": "—", "issued": "2026-09-29"},
-    {"name": "Demo Demo App", "appId": "aaa-bbb-ccc-ddd-eee", "ranges": [[88888, 88899]], "type": "PTE", "repo": "—", "visibility": "—"}
-  ],
+  "apps": [],
   "notes": [
-    "Every app currently registered declares ranges within 50000–99999, so all are typed `PTE`. No app has an AppSource range (70000000+) yet.",
-    "`50100–50149` is declared by both `ALAddNewField` and `Custom Sales Invoice Report`.",
-    "`80100–80110` overlaps with the broader `80000–80149` range declared by `BCandSki RC App`.",
-    "`80895–80899` is contained within `80890–80899`.",
-    "Both Support Manager repositories use the same placeholder app ID: `12345678-1234-1234-1234-123456789012`.",
-    "Repos prefixed `OLD-DNU-` are retired (do not use). Their rows are kept so the ranges remain visible as historically allocated.",
-    "The ranges are manifest allocations. They do not by themselves prove that every ID in each range is currently used or that the app is installed in a Business Central tenant."
+    "Registry data was cleared. Every data row was removed from the Registry table. The Free ranges table lists 50000–99999, because that whole range is available again. This wipe cannot be reversed from the current files."
   ]
 }
