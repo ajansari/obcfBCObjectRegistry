@@ -5,6 +5,7 @@ Usage:  python3 build.py
 Edit registry.json, run this, commit both files.
 index.html is static and reads ObjectRegistry.md at runtime.
 """
+import html
 import json
 from pathlib import Path
 
@@ -15,7 +16,7 @@ PTE_LOW, PTE_HIGH = 50000, 99999
 
 
 def repo_url(app):
-    """GitHub URL for the app's OnlyCopilotFans repo. githubOwner is the account path in the URL; an app may set "owner" to override it."""
+    """GitHub URL for the app's OnlyBCFans repo. githubOwner is the account path in the URL; an app may set "owner" to override it."""
     return f"https://github.com/{app.get('owner', data['githubOwner'])}/{app['repo']}"
 
 
@@ -27,7 +28,16 @@ def has_repo(app):
 def repo_cell(app):
     if not has_repo(app):
         return "—"
-    return f'<a href="{repo_url(app)}" target="_blank" rel="noopener"><code>{app["repo"]}</code></a>'
+    repo = html.escape(app["repo"])
+    # An explicit empty url means the name is known but must not be linked.
+    # A missing url keeps the older GitHub owner/repo link.
+    if "url" in app:
+        url = (app.get("url") or "").strip()
+        if not url:
+            return f"<code>{repo}</code>"
+    else:
+        url = repo_url(app)
+    return f'<a href="{html.escape(url, quote=True)}" target="_blank" rel="noopener"><code>{repo}</code></a>'
 
 
 def fmt_ranges(ranges):
@@ -61,21 +71,21 @@ def overlaps(app):
 md = [
     "# Business Central Object Registry",
     "",
-    "Master register of Business Central AL apps maintained by AJ Ansari for OnlyCopilotFans (OCPF), "
+    "Master register of Business Central AL apps maintained by AJ Ansari for OnlyBCFans (OBCF), "
     "with the object ID range(s) each app declares in its `app.json`.",
     "",
     f"Repository visibility reflects the GitHub repository metadata retrieved on **{data['asOf']}**.",
     "",
     "**Type** is `PTE` (Per-Tenant Extension, object IDs 50000–99999) or `AppSource` (object IDs 70000000 and above).",
     "",
-    "**Repo name** links to the OnlyCopilotFans repository on GitHub. Links are written as HTML anchors with `target=\"_blank\"` so "
+    "**Repo name** links to the OnlyBCFans repository on GitHub. Links are written as HTML anchors with `target=\"_blank\"` so "
     "they open in a new tab wherever the renderer allows it; github.com strips that attribute and opens them in the same tab.",
     "",
     "**Overlaps with** lists every other app whose declared range(s) intersect this app's range(s). Computed by `build.py`.",
     "",
-    '> Generated from <a href="registry.json" target="_blank" rel="noopener"><code>registry.json</code></a> by `build.py`. '
-    'Edit the JSON, not this file. For a sortable, filterable view open '
-    '<a href="index.html" target="_blank" rel="noopener"><code>index.html</code></a>.',
+    '> The webpage reads this file, so a commit here updates the page. '
+    'To remove or edit an app, edit this file, then update the Free ranges table or run the Update Free Range action. '
+    'For the sortable view open <a href="index.html" target="_blank" rel="noopener"><code>index.html</code></a>.',
     "",
     "## Registry",
     "",

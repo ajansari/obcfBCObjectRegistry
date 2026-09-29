@@ -1,0 +1,48 @@
+# Rebuilds the Free ranges table from every range still listed in the Registry
+# table. Use this after a hand edit of ObjectRegistry.md so removed or changed
+# apps are reflected in the free list. Registry rows are not changed.
+
+name: Update Free Range
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: object-registry-writes
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    name: Rebuild free ranges from the registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Use script from this workflow run
+        if: github.ref != 'refs/heads/main'
+        run: |
+          git fetch origin "${{ github.ref }}" --depth=1
+          git checkout "${{ github.sha }}" -- .github/scripts/update_free_ranges.py
+
+      - name: Rebuild the Free ranges table
+        run: |
+          python3 .github/scripts/update_free_ranges.py \
+            --summary "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit updated free ranges to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ObjectRegistry.md
+          if git diff --cached --quiet; then
+            echo "Free ranges already matched the Registry table. Nothing to commit."
+            exit 0
+          fi
+          git commit -m "Update free ranges"
+          git push origin HEAD:main

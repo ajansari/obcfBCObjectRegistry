@@ -2,7 +2,7 @@
 """Reserve the first free contiguous Business Central object ID block.
 
 Reads used ranges from ObjectRegistry.md, finds the first contiguous block of
-the requested size in 60000–99999, appends a pending app to registry.json, and
+the requested size in 50000–99999, appends a pending app to registry.json, and
 regenerates ObjectRegistry.md via build.py.
 """
 from __future__ import annotations
@@ -15,7 +15,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-SEARCH_LOW = 60000
+SEARCH_LOW = 50000
 SEARCH_HIGH = 99999
 RANGE_RE = re.compile(r"(\d+)\s*[–-]\s*(\d+)")
 ROOT = Path(__file__).resolve().parents[2]
@@ -42,7 +42,7 @@ def parse_count(raw: str) -> int:
     if count < 1:
         raise SystemExit("Object count must be at least 1.")
     if count > SEARCH_HIGH - SEARCH_LOW + 1:
-        raise SystemExit(f"Object count {count} exceeds the 60000–99999 search window.")
+        raise SystemExit(f"Object count {count} exceeds the 50000–99999 search window.")
     return count
 
 
@@ -173,7 +173,7 @@ def write_summary(path: str, name: str, start: int, end: int, count: int, issued
                     f"- **Object IDs:** {count}",
                     f"- **Issued:** {issued}",
                     "",
-                    f"Reserved the first available contiguous block in 60000–99999 and committed it to `ObjectRegistry.md`.",
+                    f"Reserved the first available contiguous block in 50000–99999 and committed it to `ObjectRegistry.md`.",
                     "",
                 ]
             )

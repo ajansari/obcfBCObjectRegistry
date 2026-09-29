@@ -13,7 +13,7 @@ on:
         type: string
 
 concurrency:
-  group: allocate-object-range
+  group: object-registry-writes
   cancel-in-progress: false
 
 permissions:

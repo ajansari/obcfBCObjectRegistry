@@ -140,7 +140,7 @@ function load(md) {
   }
   if (!HEADER.includes(COL.overlap)) HEADER.splice(HEADER.indexOf(COL.type) + 1, 0, COL.overlap);
 
-  $("sub").innerHTML = `OnlyCopilotFans (OCPF) · maintained by AJ Ansari${d.asOf ? " · repo visibility as of " + esc(d.asOf) : ""}. Click a column header to sort. Data read live from <code>ObjectRegistry.md</code>.`;
+  $("sub").innerHTML = `OnlyBCFans (OBCF) · maintained by AJ Ansari${d.asOf ? " · repo visibility as of " + esc(d.asOf) : ""}. Click a column header to sort. Data read live from <code>ObjectRegistry.md</code>.`;
   fillSelect("type", COL.type); fillSelect("vis", COL.vis);
   $("t").tHead.innerHTML = "<tr>" + HEADER.map(h => `<th data-k="${esc(h)}" class="${h === COL.range ? "num" : ""}">${esc(h)}<span class="dir"></span></th>`).join("") + "</tr>";
   document.querySelectorAll("th").forEach(th => th.addEventListener("click", () => {

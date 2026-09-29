@@ -1,16 +1,16 @@
 # Business Central Object Registry
 
-Master register of Business Central AL apps maintained by AJ Ansari for OnlyCopilotFans (OCPF), with the object ID range(s) each app declares in its `app.json`.
+Master register of Business Central AL apps maintained by AJ Ansari for OnlyBCFans (OBCF), with the object ID range(s) each app declares in its `app.json`.
 
 Repository visibility reflects the GitHub repository metadata retrieved on **September 28, 2026**.
 
 **Type** is `PTE` (Per-Tenant Extension, object IDs 50000–99999) or `AppSource` (object IDs 70000000 and above).
 
-**Repo name** links to the OnlyCopilotFans repository on GitHub. Links are written as HTML anchors with `target="_blank"` so they open in a new tab wherever the renderer allows it; github.com strips that attribute and opens them in the same tab.
+**Repo name** links to the OnlyBCFans repository on GitHub. Links are written as HTML anchors with `target="_blank"` so they open in a new tab wherever the renderer allows it; github.com strips that attribute and opens them in the same tab.
 
 **Overlaps with** lists every other app whose declared range(s) intersect this app's range(s). Computed by `build.py`.
 
-> Generated from <a href="registry.json" target="_blank" rel="noopener"><code>registry.json</code></a> by `build.py`. Edit the JSON, not this file. For a sortable, filterable view open <a href="index.html" target="_blank" rel="noopener"><code>index.html</code></a>.
+> The webpage reads this file, so a commit here updates the page. To remove or edit an app, edit this file, then update the Free ranges table or run the Update Free Range action. For the sortable view open <a href="index.html" target="_blank" rel="noopener"><code>index.html</code></a>.
 
 ## Registry
 
@@ -36,10 +36,10 @@ Repository visibility reflects the GitHub repository metadata retrieved on **Sep
 | SummitNADay1 | `a40b796a-cf2d-4810-9c79-2b94d4ca88e6` | 80890–80899 | PTE | AJ's Copilot | <a href="https://github.com/ajansari/al-instructorworkshopsample" target="_blank" rel="noopener"><code>al-instructorworkshopsample</code></a> | Public | — |
 | AJ's Copilot | `30c37d64-2af0-4ff2-b933-608b4bde8ef5` | 80895–80899 | PTE | SummitNADay1 | <a href="https://github.com/ajansari/addyourcopilottobc" target="_blank" rel="noopener"><code>addyourcopilottobc</code></a> | Public | — |
 | Metropak Coupa Agent Extension | `4e5def94-9194-4f4d-945c-e7c84b5ef4d7` | 80980–80999 | PTE | — | <a href="https://github.com/ajansari/mpkAmazonBcPte" target="_blank" rel="noopener"><code>mpkAmazonBcPte</code></a> | Private | — |
-| OnlyCopilotFans Support Manager | `12345678-1234-1234-1234-123456789012` | 88800–88899 | PTE | Support Manager | <a href="https://github.com/ajansari/OLD-DNU-alsupportcasemanager" target="_blank" rel="noopener"><code>OLD-DNU-alsupportcasemanager</code></a> | Private | — |
-| Support Manager | `12345678-1234-1234-1234-123456789012` | 88800–88899 | PTE | OnlyCopilotFans Support Manager | <a href="https://github.com/ajansari/OnlyCopilotFansSupportManager" target="_blank" rel="noopener"><code>OnlyCopilotFansSupportManager</code></a> | Private | — |
-| Business Central API Collection | `06a0b195-0da7-49be-9f55-63fedf76fa1a` | 90500–90599 | PTE | — | <a href="https://github.com/ajansari/OLD-DNU-al-OnlyCopilotFans-apiMiniLibrary" target="_blank" rel="noopener"><code>OLD-DNU-al-OnlyCopilotFans-apiMiniLibrary</code></a> | Private | — |
-| OCPF APIs v3 | `855299b2-5650-41ce-80c1-b130b89af4b4` | 90800–91099 | PTE | — | <a href="https://github.com/ajansari/ocpfBCAPIsV3" target="_blank" rel="noopener"><code>ocpfBCAPIsV3</code></a> | Public | — |
+| OnlyBCFans Support Manager | `12345678-1234-1234-1234-123456789012` | 88800–88899 | PTE | Support Manager | <a href="https://github.com/ajansari/OLD-DNU-alsupportcasemanager" target="_blank" rel="noopener"><code>OLD-DNU-alsupportcasemanager</code></a> | Private | — |
+| Support Manager | `12345678-1234-1234-1234-123456789012` | 88800–88899 | PTE | OnlyBCFans Support Manager | <a href="https://github.com/ajansari/OnlyBCFansSupportManager" target="_blank" rel="noopener"><code>OnlyBCFansSupportManager</code></a> | Private | — |
+| Business Central API Collection | `06a0b195-0da7-49be-9f55-63fedf76fa1a` | 90500–90599 | PTE | — | <a href="https://github.com/ajansari/OLD-DNU-al-OnlyBCFans-apiMiniLibrary" target="_blank" rel="noopener"><code>OLD-DNU-al-OnlyBCFans-apiMiniLibrary</code></a> | Private | — |
+| OBCF APIs v3 | `855299b2-5650-41ce-80c1-b130b89af4b4` | 90800–91099 | PTE | — | <a href="https://github.com/ajansari/obcfBCAPIsV3" target="_blank" rel="noopener"><code>obcfBCAPIsV3</code></a> | Public | — |
 
 ## Notes
 
