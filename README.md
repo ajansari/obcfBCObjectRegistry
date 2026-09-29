@@ -10,6 +10,23 @@ Created by **AJ Ansari** for **OnlyBCFans (OBCF)**.
 
 Repository name: `obcfBCObjectRegistry`. Full name: [ajansari/obcfBCObjectRegistry](https://github.com/ajansari/obcfBCObjectRegistry).
 
+## Contents
+
+- [How to use it](#how-to-use-it)
+  - [Open the webpage](#open-the-webpage)
+  - [Run Actions for these tasks](#run-actions-for-these-tasks)
+  - [Remove or edit an app by hand](#remove-or-edit-an-app-by-hand)
+- [Does the webpage not work?](#does-the-webpage-not-work)
+- [What is in this repo](#what-is-in-this-repo)
+- [Workflows](#workflows)
+  - [Allocate object range](#allocate-object-range)
+  - [Add registry row](#add-registry-row)
+  - [Clear all registry data (IRREVERSIBLE)](#clear-all-registry-data-irreversible)
+  - [Update Free Range](#update-free-range)
+- [How the registry is used](#how-the-registry-is-used)
+- [Conventions](#conventions)
+- [Related](#related)
+
 ## How to use it
 
 ### Open the webpage
@@ -24,7 +41,7 @@ https://<yourGitHubHandle>.github.io/<yourRepoName>
 
 For this repo, that address is [https://ajansari.github.io/obcfBCObjectRegistry](https://ajansari.github.io/obcfBCObjectRegistry).
 
-Turn on GitHub Pages once, or that address will not load. In the repo, open **Settings**, then **Pages**, choose **Deploy from a branch**, select the default branch and the `/ (root)` folder, and save. After that, every commit that changes `ObjectRegistry.md` shows up on the page.
+If that address does not load, see [Does the webpage not work?](#does-the-webpage-not-work). After Pages is on, every commit that changes `ObjectRegistry.md` shows up on the page.
 
 To preview it on your own machine:
 
@@ -62,11 +79,33 @@ If you remove an app, also update the Free ranges table so the object IDs it hel
 
 A hand edit of `ObjectRegistry.md` does not change `registry.json`. If you remove or change an app in the markdown, make the same change in `registry.json`, or the next **Allocate object range** run can write the old row back.
 
+## Does the webpage not work?
+
+The webpage is optional. Its benefit is that you can sort, filter, and search the registry. The markdown file on GitHub cannot do that.
+
+GitHub Pages sites are public, even when the repository is private. If you do not want a public webpage, skip the steps below. The registry file and the Actions still work without it.
+
+To turn the page on:
+
+1. Open **Settings**.
+2. Open **Pages**. It is under **Code, planning, and automation**.
+3. Under **Build and deployment**, choose **Deploy from a branch**.
+4. In the branch box, select **main**.
+5. In the next box, select **/ (root)**.
+6. Click **Save**.
+
+![GitHub Pages Build and deployment set to branch main and folder / (root)](images/enableGitHubPages.png)
+
+The page can take a minute to appear. Then open `https://<yourGitHubHandle>.github.io/<yourRepoName>`.
+
+To turn the page off after you have already saved those settings, go back to **Build and deployment**. Change the branch from **main** (or whatever it is now) to **None**, then click **Save**.
+
 ## What is in this repo
 
 | File | Purpose |
 |---|---|
 | [README.md](README.md) | This guide. |
+| [LICENSE](LICENSE) | MIT License. Copyright OnlyBCFans and AJ Ansari. |
 | [ObjectRegistry.md](ObjectRegistry.md) | The registry people read and edit. Registry table, notes, and Free ranges table. |
 | [index.html](index.html) | The webpage. It has no data of its own. Click column headers to sort; filter by text, type, visibility, overlap status, or hide retired repos. |
 | [registry.json](registry.json) | The copy the Actions and `build.py` keep beside the markdown. `githubOwner` is the account path used when an entry has no URL of its own. |
