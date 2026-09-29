@@ -1,6 +1,6 @@
-![OnlyBCFans Business Central Object Registry](images/obcfBCObjectRegistryBanner.png)
-
 # OnlyBCFans Business Central Object Registry
+
+![OnlyBCFans Business Central Object Registry](images/obcfBCObjectRegistryBanner.png)
 
 A master registry of Microsoft Dynamics 365 Business Central AL extensions and the object ID ranges each one declares. Its purpose is to make it easy to see, in one place, which object ranges are already allocated across every app so that new projects can pick a free range and avoid collisions.
 
