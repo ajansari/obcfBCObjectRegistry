@@ -25,7 +25,8 @@
     {"name": "Business Central API Collection", "appId": "06a0b195-0da7-49be-9f55-63fedf76fa1a", "ranges": [[90500, 90599]], "type": "PTE", "repo": "OLD-DNU-al-OnlyBCFans-apiMiniLibrary", "visibility": "Private"},
     {"name": "OBCF APIs v3", "appId": "855299b2-5650-41ce-80c1-b130b89af4b4", "ranges": [[90800, 91099]], "type": "PTE", "repo": "obcfBCAPIsV3", "visibility": "Public"},
     {"name": "TestProject001 - Pending", "appId": "—", "ranges": [[60000, 60019]], "type": "PTE", "repo": "—", "visibility": "—", "issued": "2026-09-29"},
-    {"name": "Sam s Demo Project - Pending", "appId": "—", "ranges": [[60020, 60042]], "type": "PTE", "repo": "—", "visibility": "—", "issued": "2026-09-29"}
+    {"name": "Sam s Demo Project - Pending", "appId": "—", "ranges": [[60020, 60042]], "type": "PTE", "repo": "—", "visibility": "—", "issued": "2026-09-29"},
+    {"name": "Demo Demo App", "appId": "aaa-bbb-ccc-ddd-eee", "ranges": [[88888, 88899]], "type": "PTE", "repo": "—", "visibility": "—"}
   ],
   "notes": [
     "Every app currently registered declares ranges within 50000–99999, so all are typed `PTE`. No app has an AppSource range (70000000+) yet.",

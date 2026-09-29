@@ -36,10 +36,11 @@ Repository visibility reflects the GitHub repository metadata retrieved on **Sep
 | SummitNADay1 | `a40b796a-cf2d-4810-9c79-2b94d4ca88e6` | 80890–80899 | PTE | AJ's Copilot | <a href="https://github.com/ajansari/al-instructorworkshopsample" target="_blank" rel="noopener"><code>al-instructorworkshopsample</code></a> | Public | — |
 | AJ's Copilot | `30c37d64-2af0-4ff2-b933-608b4bde8ef5` | 80895–80899 | PTE | SummitNADay1 | <a href="https://github.com/ajansari/addyourcopilottobc" target="_blank" rel="noopener"><code>addyourcopilottobc</code></a> | Public | — |
 | Metropak Coupa Agent Extension | `4e5def94-9194-4f4d-945c-e7c84b5ef4d7` | 80980–80999 | PTE | — | <a href="https://github.com/ajansari/mpkAmazonBcPte" target="_blank" rel="noopener"><code>mpkAmazonBcPte</code></a> | Private | — |
-| OnlyBCFans Support Manager | `12345678-1234-1234-1234-123456789012` | 88800–88899 | PTE | Support Manager | <a href="https://github.com/ajansari/OLD-DNU-alsupportcasemanager" target="_blank" rel="noopener"><code>OLD-DNU-alsupportcasemanager</code></a> | Private | — |
-| Support Manager | `12345678-1234-1234-1234-123456789012` | 88800–88899 | PTE | OnlyBCFans Support Manager | <a href="https://github.com/ajansari/OnlyBCFansSupportManager" target="_blank" rel="noopener"><code>OnlyBCFansSupportManager</code></a> | Private | — |
+| OnlyBCFans Support Manager | `12345678-1234-1234-1234-123456789012` | 88800–88899 | PTE | Support Manager; Demo Demo App | <a href="https://github.com/ajansari/OLD-DNU-alsupportcasemanager" target="_blank" rel="noopener"><code>OLD-DNU-alsupportcasemanager</code></a> | Private | — |
+| Support Manager | `12345678-1234-1234-1234-123456789012` | 88800–88899 | PTE | OnlyBCFans Support Manager; Demo Demo App | <a href="https://github.com/ajansari/OnlyBCFansSupportManager" target="_blank" rel="noopener"><code>OnlyBCFansSupportManager</code></a> | Private | — |
 | Business Central API Collection | `06a0b195-0da7-49be-9f55-63fedf76fa1a` | 90500–90599 | PTE | — | <a href="https://github.com/ajansari/OLD-DNU-al-OnlyBCFans-apiMiniLibrary" target="_blank" rel="noopener"><code>OLD-DNU-al-OnlyBCFans-apiMiniLibrary</code></a> | Private | — |
 | OBCF APIs v3 | `855299b2-5650-41ce-80c1-b130b89af4b4` | 90800–91099 | PTE | — | <a href="https://github.com/ajansari/obcfBCAPIsV3" target="_blank" rel="noopener"><code>obcfBCAPIsV3</code></a> | Public | — |
+| Demo Demo App | `aaa-bbb-ccc-ddd-eee` | 88888–88899 | PTE | OnlyBCFans Support Manager; Support Manager | — | — | — |
 
 ## Notes
 
