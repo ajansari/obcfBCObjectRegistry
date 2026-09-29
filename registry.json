@@ -1,8 +1,27 @@
 {
-  "asOf": "September 28, 2026",
+  "asOf": "September 29, 2026",
   "githubOwner": "ajansari",
-  "apps": [],
+  "apps": [
+    {"name": "Demo Warehouse Labels", "appId": "d1000001-0000-4000-8000-000000000001", "ranges": [[50100, 50119]], "type": "PTE", "repo": "demo-warehouse-labels", "visibility": "Public", "url": "", "issued": "2026-09-29"},
+    {"name": "Demo Customer Portal", "appId": "d1000002-0000-4000-8000-000000000002", "ranges": [[50200, 50249]], "type": "PTE", "repo": "demo-customer-portal", "visibility": "Private", "url": "", "issued": "2026-09-29"},
+    {"name": "Demo Sales Pricing", "appId": "d1000003-0000-4000-8000-000000000003", "ranges": [[51000, 51029]], "type": "PTE", "repo": "demo-sales-pricing", "visibility": "Public", "url": "", "issued": "2026-09-29"},
+    {"name": "Demo Price Exceptions", "appId": "d1000004-0000-4000-8000-000000000004", "ranges": [[51020, 51039]], "type": "PTE", "repo": "demo-price-exceptions", "visibility": "Private", "url": "", "issued": "2026-09-29"},
+    {"name": "Demo Vendor Approvals", "appId": "d1000005-0000-4000-8000-000000000005", "ranges": [[52000, 52009]], "type": "PTE", "repo": "demo-vendor-approvals", "visibility": "Public", "url": "", "issued": "—"},
+    {"name": "Demo Lot Tracking", "appId": "d1000006-0000-4000-8000-000000000006", "ranges": [[53000, 53049], [53060, 53099]], "type": "PTE", "repo": "demo-lot-tracking", "visibility": "Private", "url": "", "issued": "2026-09-29"},
+    {"name": "Demo Shop Floor", "appId": "d1000007-0000-4000-8000-000000000007", "ranges": [[54000, 54049]], "type": "PTE", "repo": "—", "visibility": "—", "url": "", "issued": "—"},
+    {"name": "Demo Expense Entry", "appId": "d1000008-0000-4000-8000-000000000008", "ranges": [[55000, 55019]], "type": "PTE", "repo": "demo-expense-entry", "visibility": "Public", "url": "", "issued": "2026-09-29"},
+    {"name": "Demo Service Dispatch", "appId": "d1000009-0000-4000-8000-000000000009", "ranges": [[56000, 56039]], "type": "PTE", "repo": "demo-service-dispatch", "visibility": "Private", "url": "", "issued": "—"},
+    {"name": "Demo Rebate Accrual", "appId": "d1000010-0000-4000-8000-000000000010", "ranges": [[57000, 57014]], "type": "PTE", "repo": "demo-rebate-accrual", "visibility": "Public", "url": "", "issued": "2026-09-29"},
+    {"name": "Demo Bank Rec Helper", "appId": "d1000011-0000-4000-8000-000000000011", "ranges": [[58000, 58009]], "type": "PTE", "repo": "—", "visibility": "—", "url": "", "issued": "—"},
+    {"name": "Demo Intercompany Posting", "appId": "d1000012-0000-4000-8000-000000000012", "ranges": [[60000, 60049]], "type": "PTE", "repo": "demo-intercompany-posting", "visibility": "Private", "url": "", "issued": "2026-09-29"},
+    {"name": "Demo AppSource Payments", "appId": "d1000013-0000-4000-8000-000000000013", "ranges": [[70000000, 70000049]], "type": "AppSource", "repo": "demo-appsource-payments", "visibility": "Public", "url": "", "issued": "2026-09-29"},
+    {"name": "Demo AppSource Tax Connector", "appId": "d1000014-0000-4000-8000-000000000014", "ranges": [[70100000, 70100019]], "type": "AppSource", "repo": "demo-appsource-tax", "visibility": "Public", "url": "", "issued": "—"},
+    {"name": "Demo AppSource EDI", "appId": "d1000015-0000-4000-8000-000000000015", "ranges": [[70200000, 70200099]], "type": "AppSource", "repo": "demo-appsource-edi", "visibility": "Private", "url": "", "issued": "2026-09-29"}
+  ],
   "notes": [
-    "Registry data was cleared. Every data row was removed from the Registry table. The Free ranges table lists 50000–99999, because that whole range is available again. This wipe cannot be reversed from the current files."
+    "These 15 rows are demo data so you can try the registry, the webpage, and the Actions. Replace them with your own apps.",
+    "Demo Sales Pricing and Demo Price Exceptions overlap on 51020–51029 on purpose.",
+    "Demo Lot Tracking has two ranges, with 53050–53059 left free between them.",
+    "AppSource ranges start at 70000000, so they do not change the Free ranges table."
   ]
 }
