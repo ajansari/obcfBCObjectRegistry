@@ -158,11 +158,11 @@ Leave the last three fields blank when they are not available. If a repo URL is 
 - clears every app in `registry.json`, so the deleted rows are not written back by the next render
 - replaces the notes in both files with one line stating that the registry was cleared
 
-GitHub shows a confirmation form **before** the workflow runs. The choice defaults to **NO**. To proceed:
+GitHub shows a confirmation form **before** the workflow runs. The choice defaults to **No, do not clear**. To proceed:
 
 1. Open **Actions**, choose **Clear all registry data (IRREVERSIBLE)**, and click **Run workflow**.
 2. Read the warning on the form.
-3. Change the confirmation choice from `NO` to `YES`.
+3. Change the confirmation choice from `No, do not clear` to `Yes, clear all data`.
 4. Type `CLEAR ALL DATA` in the confirmation phrase field.
 5. Click the green **Run workflow** button.
 

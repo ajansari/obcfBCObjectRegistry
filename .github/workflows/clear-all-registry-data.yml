@@ -1,6 +1,7 @@
 # IRREVERSIBLE. Deletes every Registry data row and resets Free ranges to 50000-99999.
 # GitHub shows the confirmation form below before this workflow runs.
-# Choose YES and type CLEAR ALL DATA, or the job stops without changing files.
+# Choose "Yes, clear all data" and type CLEAR ALL DATA, or the job stops without changing files.
+# Do not use bare YES/NO choice values. GitHub's YAML parser turns those into true/false.
 
 name: Clear all registry data (IRREVERSIBLE)
 
@@ -8,13 +9,13 @@ on:
   workflow_dispatch:
     inputs:
       confirm:
-        description: "WARNING: Use only when all registry data must be deleted. This permanently removes every Registry data row, resets Free ranges to one row 50000-99999, clears registry.json, replaces the notes, and cannot be reversed. Choose YES only to proceed."
+        description: "WARNING: Use only when all registry data must be deleted. This permanently removes every Registry data row, resets Free ranges to one row 50000-99999, clears registry.json, replaces the notes, and cannot be reversed. Choose Yes, clear all data only to proceed."
         required: true
         type: choice
-        default: NO
+        default: "No, do not clear"
         options:
-          - NO
-          - YES
+          - "No, do not clear"
+          - "Yes, clear all data"
       confirm_phrase:
         description: "Type CLEAR ALL DATA to confirm. This wipe cannot be reversed."
         required: true
@@ -38,9 +39,15 @@ jobs:
           PHRASE: ${{ inputs.confirm_phrase }}
         run: |
           echo "::warning title=Irreversible wipe::This deletes every registry data row and resets Free ranges to 50000-99999. It cannot be reversed."
+          choice=$(printf '%s' "$CONFIRM" | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
           phrase=$(printf '%s' "$PHRASE" | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-          if [ "$CONFIRM" != "YES" ] || [ "$phrase" != "CLEAR ALL DATA" ]; then
-            echo "::error title=Confirmation rejected::Refusing to clear. Choose YES and type CLEAR ALL DATA. No files were changed."
+          # A bare YES choice is parsed by GitHub as the boolean true, so accept that too.
+          case "$choice" in
+            "Yes, clear all data"|YES|yes|true|True) confirmed=1 ;;
+            *) confirmed=0 ;;
+          esac
+          if [ "$confirmed" != 1 ] || [ "$phrase" != "CLEAR ALL DATA" ]; then
+            echo "::error title=Confirmation rejected::Refusing to clear. Choice was '$choice'. Choose Yes, clear all data and type CLEAR ALL DATA. No files were changed."
             exit 1
           fi
 
