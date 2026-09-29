@@ -1,0 +1,84 @@
+# IRREVERSIBLE. Deletes every Registry data row and resets Free ranges to 50000-99999.
+# GitHub shows the confirmation form below before this workflow runs.
+# Choose "Yes, clear all data" and type CLEAR ALL DATA, or the job stops without changing files.
+# Do not use bare YES/NO choice values. GitHub's YAML parser turns those into true/false.
+
+name: Clear all registry data (IRREVERSIBLE)
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: "WARNING: Use only when all registry data must be deleted. This permanently removes every Registry data row, resets Free ranges to one row 50000-99999, clears registry.json, replaces the notes, and cannot be reversed. Choose Yes, clear all data only to proceed."
+        required: true
+        type: choice
+        default: "No, do not clear"
+        options:
+          - "No, do not clear"
+          - "Yes, clear all data"
+      confirm_phrase:
+        description: "Type CLEAR ALL DATA to confirm. This wipe cannot be reversed."
+        required: true
+        type: string
+
+concurrency:
+  group: object-registry-writes
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  clear:
+    name: Clear registry data after confirmation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm before changing any files
+        env:
+          CONFIRM: ${{ inputs.confirm }}
+          PHRASE: ${{ inputs.confirm_phrase }}
+        run: |
+          echo "::warning title=Irreversible wipe::This deletes every registry data row and resets Free ranges to 50000-99999. It cannot be reversed."
+          choice=$(printf '%s' "$CONFIRM" | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+          phrase=$(printf '%s' "$PHRASE" | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+          # A bare YES choice is parsed by GitHub as the boolean true, so accept that too.
+          case "$choice" in
+            "Yes, clear all data"|YES|yes|true|True) confirmed=1 ;;
+            *) confirmed=0 ;;
+          esac
+          if [ "$confirmed" != 1 ] || [ "$phrase" != "CLEAR ALL DATA" ]; then
+            echo "::error title=Confirmation rejected::Refusing to clear. Choice was '$choice'. Choose Yes, clear all data and type CLEAR ALL DATA. No files were changed."
+            exit 1
+          fi
+
+      - name: Checkout main
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Use script from this workflow run
+        if: github.ref != 'refs/heads/main'
+        run: |
+          git fetch origin "${{ github.ref }}" --depth=1
+          git checkout "${{ github.sha }}" -- .github/scripts/clear_registry.py
+
+      - name: Clear registry rows and reset free ranges
+        env:
+          PHRASE: ${{ inputs.confirm_phrase }}
+        run: |
+          phrase=$(printf '%s' "$PHRASE" | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+          python3 .github/scripts/clear_registry.py \
+            --confirm "$phrase" \
+            --summary "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit cleared registry to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ObjectRegistry.md registry.json
+          if git diff --cached --quiet; then
+            echo "Registry tables were already empty. Nothing to commit."
+            exit 0
+          fi
+          git commit -m "Clear all registry data"
+          git push origin HEAD:main

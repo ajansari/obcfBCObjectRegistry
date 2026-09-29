@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BC Object Registry</title>
+<style>
+  :root { --bg:#fff; --fg:#1f2328; --muted:#59636e; --line:#d1d9e0; --head:#f6f8fa; --hover:#f0f4f8; --accent:#0969da; --warn:#9a6700; --note:#fff8c5; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0d1117; --fg:#e6edf3; --muted:#9198a1; --line:#30363d; --head:#161b22; --hover:#1c2129; --accent:#4493f8; --warn:#d29922; --note:#2a2410; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:24px 16px; background:var(--bg); color:var(--fg);
+         font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; }
+  main { max-width:1200px; margin:0 auto; }
+  h1 { font-size:22px; margin:0 0 4px; }
+  .sub { color:var(--muted); margin:0 0 16px; }
+  .controls { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; align-items:center; }
+  input, select { font:inherit; padding:6px 8px; border:1px solid var(--line); border-radius:6px; background:var(--bg); color:var(--fg); }
+  input[type=search] { flex:1 1 220px; min-width:160px; }
+  .count { color:var(--muted); margin-left:auto; }
+  .wrap { overflow-x:auto; border:1px solid var(--line); border-radius:6px; }
+  table { border-collapse:collapse; width:100%; min-width:1200px; }
+  th, td { padding:8px 10px; border-bottom:1px solid var(--line); text-align:left; white-space:nowrap; }
+  th { background:var(--head); cursor:pointer; user-select:none; position:sticky; top:0; }
+  th:hover { color:var(--accent); }
+  th .dir { color:var(--muted); font-size:11px; margin-left:4px; }
+  tr:hover td { background:var(--hover); }
+  td.num { text-align:right; font-variant-numeric:tabular-nums; }
+  code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  tr.retired td { color:var(--muted); }
+  td.warn { color:var(--warn); white-space:normal; min-width:180px; }
+  h2 { font-size:16px; margin:24px 0 8px; }
+  ul { margin:0; padding-left:20px; }
+  .free { columns:3; column-gap:24px; }
+  @media (max-width:600px) { .free { columns:2; } }
+  #fallback { display:none; background:var(--note); border:1px solid var(--line); border-radius:6px; padding:12px 16px; margin-bottom:16px; }
+  #fallback pre { margin:8px 0; }
+  #err { color:var(--warn); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Business Central Object Registry</h1>
+  <p class="sub" id="sub">Loading <code>ObjectRegistry.md</code>…</p>
+
+  <div id="fallback">
+    <strong>Could not load <code>ObjectRegistry.md</code> automatically.</strong>
+    <span id="err"></span>
+    <p>Browsers block reading local files from a page opened directly. Either serve the folder and open <code>http://localhost:8000/</code>:</p>
+    <pre><code>python3 -m http.server 8000</code></pre>
+    <p>or pick the file manually: <input type="file" id="pick" accept=".md,text/markdown"></p>
+  </div>
+
+  <div class="controls">
+    <input id="q" type="search" placeholder="Filter by name, App ID, range, or repo…" aria-label="Filter">
+    <select id="type" aria-label="Type"><option value="">All types</option></select>
+    <select id="vis" aria-label="Visibility"><option value="">All visibility</option></select>
+    <select id="dup" aria-label="Overlaps"><option value="">All ranges</option><option value="only">Only overlapping</option><option value="none">Only clean</option></select>
+    <select id="retired" aria-label="Retired"><option value="">Include retired</option><option value="hide">Hide retired (OLD-DNU)</option></select>
+    <span class="count" id="count"></span>
+  </div>
+
+  <div class="wrap"><table id="t"><thead></thead><tbody></tbody></table></div>
+
+  <h2>Notes</h2>
+  <ul id="notes"></ul>
+
+  <h2 id="freeHead">Free ranges</h2>
+  <ul class="free" id="free"></ul>
+</main>
+
+<script>
+// ---- Markdown parsing -------------------------------------------------------
+// Reads the first pipe table under "## Registry", plus the bullet list under
+// "## Notes" and the one-column table under "## Free ranges". Column names are
+// taken from the table header, so extra columns in the Markdown appear here too.
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const strip = s => s.replace(/`/g, "").trim();
+// Turn a Markdown cell into safe HTML. Accepts [text](url) or <a href="url" ...>text</a>; plain text otherwise.
+const parseLink = v => {
+  let m = v.match(/^\[(.+?)\]\((https?:\/\/[^)\s]+)\)$/);
+  if (m) return { text: m[1], url: m[2] };
+  m = v.match(/^<a\s[^>]*href="(https?:\/\/[^"]+)"[^>]*>(.*?)<\/a>$/i);
+  if (m) return { text: m[2].replace(/<[^>]+>/g, ""), url: m[1] };
+  return null;
+};
+const cellHtml = v => { const l = parseLink(v); return l ? `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.text)}</a>` : esc(v); };
+const cellText = v => { const l = parseLink(v); return l ? l.text : v; };
+const splitRow = line => line.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map(strip);
+
+function parseTable(lines) {
+  const header = splitRow(lines[0]);
+  const rows = lines.slice(2).filter(l => l.trim().startsWith("|")).map(l => {
+    const cells = splitRow(l), o = {};
+    header.forEach((h, i) => { o[h] = cellText(cells[i] ?? ""); o["_raw_" + h] = cells[i] ?? ""; });
+    return o;
+  });
+  return { header, rows };
+}
+
+function parseRanges(text) {
+  return text.split(";").map(s => s.trim().match(/(\d+)\s*[–-]\s*(\d+)/)).filter(Boolean).map(m => [+m[1], +m[2]]);
+}
+
+function parseMarkdown(md) {
+  const lines = md.split(/\r?\n/);
+  const sections = {};
+  let cur = "";
+  for (const l of lines) {
+    const h = l.match(/^##\s+(.+)/);
+    if (h) { cur = h[1].trim(); sections[cur] = []; continue; }
+    if (cur) sections[cur].push(l);
+  }
+  const asOf = (md.match(/retrieved on \*\*(.+?)\*\*/) || [])[1] || "";
+  const regLines = (sections["Registry"] || []).filter(l => l.trim().startsWith("|"));
+  const { header, rows } = parseTable(regLines);
+  const notes = (sections["Notes"] || []).filter(l => /^\s*-\s/.test(l)).map(l => strip(l.replace(/^\s*-\s/, "")));
+  const freeKey = Object.keys(sections).find(k => /^Free ranges/i.test(k)) || "";
+  const free = (sections[freeKey] || []).filter(l => l.trim().startsWith("|")).slice(2).map(l => splitRow(l)[0]);
+  return { asOf, header, rows, notes, free, freeHead: freeKey };
+}
+
+// ---- Model ------------------------------------------------------------------
+const COL = { name:"App name", id:"App ID", range:"Object range(s)", type:"Type", overlap:"Overlaps with", repo:"Repo name", vis:"Visibility" };
+let HEADER = [], ROWS = [], sortKey = COL.range, sortDir = 1;
+
+function load(md) {
+  const d = parseMarkdown(md);
+  HEADER = d.header;
+  ROWS = d.rows.map(r => ({ ...r, _ranges: parseRanges(r[COL.range] || ""), _retired: (r[COL.repo] || "").startsWith("OLD-DNU-") }));
+  // Compute overlaps in the browser so the column is correct even if the Markdown is edited by hand.
+  for (const r of ROWS) {
+    r._overlaps = ROWS.filter(o => o !== r && r._ranges.some(([a, b]) => o._ranges.some(([c, e]) => a <= e && c <= b)))
+                      .map(o => o[COL.name]).join("; ");
+    r[COL.overlap] = r._overlaps;
+  }
+  if (!HEADER.includes(COL.overlap)) HEADER.splice(HEADER.indexOf(COL.type) + 1, 0, COL.overlap);
+
+  $("sub").innerHTML = `OnlyBCFans (OBCF) · maintained by AJ Ansari${d.asOf ? " · repo visibility as of " + esc(d.asOf) : ""}. Click a column header to sort. Data read live from <code>ObjectRegistry.md</code>.`;
+  fillSelect("type", COL.type); fillSelect("vis", COL.vis);
+  $("t").tHead.innerHTML = "<tr>" + HEADER.map(h => `<th data-k="${esc(h)}" class="${h === COL.range ? "num" : ""}">${esc(h)}<span class="dir"></span></th>`).join("") + "</tr>";
+  document.querySelectorAll("th").forEach(th => th.addEventListener("click", () => {
+    if (sortKey === th.dataset.k) sortDir = -sortDir; else { sortKey = th.dataset.k; sortDir = 1; }
+    render();
+  }));
+  $("notes").innerHTML = d.notes.map(n => `<li>${esc(n)}</li>`).join("");
+  $("free").innerHTML = d.free.map(f => `<li>${esc(f)}</li>`).join("");
+  if (d.freeHead) $("freeHead").textContent = d.freeHead;
+  render();
+}
+
+function fillSelect(id, col) {
+  const sel = $(id), seen = new Set(ROWS.map(r => r[col]).filter(Boolean));
+  [...sel.querySelectorAll("option:not([value=''])")].forEach(o => o.remove());
+  for (const v of [...seen].sort()) sel.add(new Option(v, v));
+}
+
+function sortVal(r, k) {
+  if (k === COL.range) return r._ranges.length ? r._ranges[0][0] : Number.MAX_SAFE_INTEGER;
+  return r[k] || "";
+}
+
+function render() {
+  const q = $("q").value.trim().toLowerCase();
+  const type = $("type").value, vis = $("vis").value, hideRetired = $("retired").value === "hide", dup = $("dup").value;
+  let rows = ROWS.filter(r =>
+    (!type || r[COL.type] === type) &&
+    (!vis || r[COL.vis] === vis) &&
+    (!hideRetired || !r._retired) &&
+    (!dup || (dup === "only") === !!r._overlaps) &&
+    (!q || HEADER.some(h => (r[h] || "").toLowerCase().includes(q)))
+  );
+  rows.sort((a, b) => {
+    const x = sortVal(a, sortKey), y = sortVal(b, sortKey);
+    const c = typeof x === "number" ? x - y : String(x).localeCompare(String(y), undefined, { sensitivity: "base" });
+    return c * sortDir || sortVal(a, COL.range) - sortVal(b, COL.range);
+  });
+  $("t").tBodies[0].innerHTML = rows.map(r => `<tr class="${r._retired ? "retired" : ""}">` + HEADER.map(h => {
+    const v = r[h] || "";
+    if (h === COL.repo) return `<td><code>${cellHtml(r["_raw_" + h] || v)}</code></td>`;
+    if (h === COL.id) return `<td><code>${esc(v)}</code></td>`;
+    if (h === COL.range) return `<td class="num">${esc(v)}</td>`;
+    if (h === COL.overlap) return `<td class="${v ? "warn" : ""}">${esc(v || "—")}</td>`;
+    return `<td>${esc(v)}</td>`;
+  }).join("") + "</tr>").join("");
+  $("count").textContent = `${rows.length} of ${ROWS.length} apps`;
+  document.querySelectorAll("th").forEach(th => th.querySelector(".dir").textContent =
+    th.dataset.k === sortKey ? (sortDir === 1 ? "▲" : "▼") : "");
+}
+
+["q", "type", "vis", "dup", "retired"].forEach(id => $(id).addEventListener("input", render));
+$("pick").addEventListener("change", e => {
+  const f = e.target.files[0]; if (!f) return;
+  f.text().then(t => { $("fallback").style.display = "none"; load(t); });
+});
+
+// ---- Boot -------------------------------------------------------------------
+fetch("ObjectRegistry.md", { cache: "no-store" })
+  .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); })
+  .then(load)
+  .catch(err => {
+    $("sub").textContent = "";
+    $("err").textContent = ` (${err.message})`;
+    $("fallback").style.display = "block";
+  });
+</script>
+</body>
+</html>

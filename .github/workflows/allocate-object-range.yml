@@ -1,0 +1,59 @@
+name: Allocate object range
+
+on:
+  workflow_dispatch:
+    inputs:
+      object_count:
+        description: How large of a Business Central object range is needed (e.g. 10, 20, 50)
+        required: true
+        type: string
+      project_name:
+        description: Placeholder name for the project
+        required: true
+        type: string
+
+concurrency:
+  group: object-registry-writes
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  allocate:
+    name: Reserve the next free object range
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Use allocator from this workflow run
+        if: github.ref != 'refs/heads/main'
+        run: |
+          git fetch origin "${{ github.ref }}" --depth=1
+          git checkout "${{ github.sha }}" -- .github/scripts/allocate_range.py build.py
+
+      - name: Allocate range
+        id: allocate
+        env:
+          OBJECT_COUNT: ${{ inputs.object_count }}
+          PROJECT_NAME: ${{ inputs.project_name }}
+        run: |
+          python3 .github/scripts/allocate_range.py \
+            --count "$OBJECT_COUNT" \
+            --name "$PROJECT_NAME" \
+            --output-env "$GITHUB_OUTPUT" \
+            --summary "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit reservation to main
+        env:
+          RANGE: ${{ steps.allocate.outputs.range }}
+          PROJECT: ${{ steps.allocate.outputs.project }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ObjectRegistry.md registry.json
+          git commit -m "Reserve ${RANGE} for ${PROJECT}"
+          git push origin HEAD:main
