@@ -198,3 +198,8 @@ Run it from **Actions** with no form fields. Click **Run workflow** on `main`.
 - [ajansari/obcfBCObjectRegistry](https://github.com/ajansari/obcfBCObjectRegistry)
 - [AJ Ansari - OnlyBCFans](https://github.com/ajansari) on GitHub
 - OBCF AL Development Standards Guide (object ID allocation rules)
+
+## Contact Information
+
+- [AJ Ansari - LinkedIn](https://linkedin.com/in/ajansari)
+- [AJAnsari.com](https://ajansari.com)
