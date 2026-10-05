@@ -17,6 +17,7 @@ Repository visibility reflects the GitHub repository metadata retrieved on **Sep
 | App name | App ID | Object range(s) | Type | Overlaps with | Repo name | Visibility | Issued |
 |---|---|---:|---|---|---|---|---|
 | XYZ Super Duper App - Pending | `—` | 50000–50022 | PTE | — | — | — | 2026-10-02 |
+| Kurt s Awesome BC Project - Pending | `—` | 50023–50045 | PTE | — | — | — | 2026-10-05 |
 | Demo Warehouse Labels | `d1000001-0000-4000-8000-000000000001` | 50100–50119 | PTE | — | <code>demo-warehouse-labels</code> | Public | 2026-09-29 |
 | Demo Customer Portal | `d1000002-0000-4000-8000-000000000002` | 50200–50249 | PTE | — | <code>demo-customer-portal</code> | Private | 2026-09-29 |
 | Demo Sales Pricing | `d1000003-0000-4000-8000-000000000003` | 51000–51029 | PTE | Demo Price Exceptions | <code>demo-sales-pricing</code> | Public | 2026-09-29 |
@@ -46,7 +47,7 @@ Gaps between the allocations above, for picking a new range. Computed by `build.
 
 | Free range |
 |---:|
-| 50023–50099 |
+| 50046–50099 |
 | 50120–50199 |
 | 50250–50999 |
 | 51040–51999 |
