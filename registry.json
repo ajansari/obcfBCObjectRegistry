@@ -19,7 +19,8 @@
     {"name": "Demo AppSource EDI", "appId": "d1000015-0000-4000-8000-000000000015", "ranges": [[70200000, 70200099]], "type": "AppSource", "repo": "demo-appsource-edi", "visibility": "Private", "url": "", "issued": "2026-09-29"},
     {"name": "XYZ Super Duper App - Pending", "appId": "—", "ranges": [[50000, 50022]], "type": "PTE", "repo": "—", "visibility": "—", "issued": "2026-10-02"},
     {"name": "Kurt s Awesome BC Project - Pending", "appId": "—", "ranges": [[50023, 50045]], "type": "PTE", "repo": "—", "visibility": "—", "issued": "2026-10-05"},
-    {"name": "BCUG Project - Pending", "appId": "—", "ranges": [[50046, 50070]], "type": "PTE", "repo": "—", "visibility": "—", "issued": "2026-10-08"}
+    {"name": "BCUG Project - Pending", "appId": "—", "ranges": [[50046, 50070]], "type": "PTE", "repo": "—", "visibility": "—", "issued": "2026-10-08"},
+    {"name": "AL Dev Bootcamp - Pending", "appId": "—", "ranges": [[50071, 50090]], "type": "PTE", "repo": "—", "visibility": "—", "issued": "2026-10-10"}
   ],
   "notes": [
     "These 15 rows are demo data so you can try the registry, the webpage, and the Actions. Replace them with your own apps.",
